@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Usuario } from '../usuarios/usuario.entity'; // Asegúrate de importar la entidad Usuario correctamente
 
 @Entity()
 export class Libro {
@@ -8,8 +9,8 @@ export class Libro {
   @Column()
   titulo: string;
 
-  @Column()
-  autor: string;
+  @ManyToOne(() => Usuario, usuario => usuario.libros) // Definición de la relación muchos a uno
+  autor: Usuario;
 
   @Column()
   anioPublicacion: number;
