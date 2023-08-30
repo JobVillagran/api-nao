@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
-import { CreateUsuarioDto, UpdateUsuarioDto } from './dto';
+import { CreateUsuarioDto, UpdateUsuarioDto } from './dto/usuarios.dto';
 
 @Controller('usuarios')
 export class UsuariosController {

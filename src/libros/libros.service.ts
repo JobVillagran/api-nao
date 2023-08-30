@@ -5,6 +5,15 @@ import { Libro } from './libro.entity';
 
 @Injectable()
 export class LibrosService {
+  eliminar(id: number): void | PromiseLike<void> {
+      throw new Error('Method not implemented.');
+  }
+  actualizar(id: number, libro: Libro): Libro | PromiseLike<Libro> {
+      throw new Error('Method not implemented.');
+  }
+  obtenerPorId(id: number): Libro | PromiseLike<Libro> {
+      throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectRepository(Libro)
     private readonly libroRepository: Repository<Libro>,

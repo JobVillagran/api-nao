@@ -10,4 +10,5 @@ export class Usuario {
 
   @Column()
   contraseña: string;
+  libros: any;
 }
