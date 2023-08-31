@@ -1,0 +1,217 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API de Biblioteca NAO",
+      "version": "1.0.0",
+      "description": "API para gestionar libros en la biblioteca NAO",
+      "license": {
+        "name": "Apache 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000",
+        "description": "Servidor local de desarrollo"
+      }
+    ],
+    "paths": {
+      "/libros": {
+        "get": {
+          "summary": "Obtener todos los libros",
+          "responses": {
+            "200": {
+              "description": "Lista de libros",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "id": 1,
+                      "titulo": "Libro 1",
+                      "autor": {
+                        "nombreUsuario": "usuarioEjemplo",
+                        "contraseña": "contraseñaEjemplo"
+                      },
+                      "anioPublicacion": 2023
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Crear un nuevo libro",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibroInput"
+                },
+                "example": {
+                  "titulo": "Nuevo Libro",
+                  "autor": {
+                    "nombreUsuario": "usuarioEjemplo",
+                    "contraseña": "contraseñaEjemplo"
+                  },
+                  "anioPublicacion": 2023
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Libro creado exitosamente",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "id": 2,
+                    "titulo": "Nuevo Libro",
+                    "autor": {
+                      "nombreUsuario": "usuarioEjemplo",
+                      "contraseña": "contraseñaEjemplo"
+                    },
+                    "anioPublicacion": 2023
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/libros/{id}": {
+        "get": {
+          "summary": "Obtener un libro por su ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID del libro a obtener"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Detalles del libro",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "id": 1,
+                    "titulo": "Libro 1",
+                    "autor": {
+                      "nombreUsuario": "usuarioEjemplo",
+                      "contraseña": "contraseñaEjemplo"
+                    },
+                    "anioPublicacion": 2023
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Actualizar un libro existente",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID del libro a actualizar"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibroInput"
+                },
+                "example": {
+                  "titulo": "Libro Actualizado",
+                  "autor": {
+                    "nombreUsuario": "usuarioEjemplo",
+                    "contraseña": "contraseñaEjemplo"
+                  },
+                  "anioPublicacion": 2022
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Libro actualizado exitosamente",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "id": 1,
+                    "titulo": "Libro Actualizado",
+                    "autor": {
+                      "nombreUsuario": "usuarioEjemplo",
+                      "contraseña": "contraseñaEjemplo"
+                    },
+                    "anioPublicacion": 2022
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Eliminar un libro",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID del libro a eliminar"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Libro eliminado exitosamente"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "LibroInput": {
+          "type": "object",
+          "properties": {
+            "titulo": {
+              "type": "string"
+            },
+            "autor": {
+              "$ref": "#/components/schemas/AutorInput"
+            },
+            "anioPublicacion": {
+              "type": "integer"
+            }
+          }
+        },
+        "AutorInput": {
+          "type": "object",
+          "properties": {
+            "nombreUsuario": {
+              "type": "string"
+            },
+            "contraseña": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+  
