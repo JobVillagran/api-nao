@@ -1,26 +1,36 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { LibrosController } from '../libros/libros.controller';
+import { LibrosService } from '../libros/libros.service';
+import { Libro } from '../libros/libro.entity';
 import { Repository } from 'typeorm';
-import { Libro } from './libro.entity';
-import { Usuario } from 'src/usuarios/usuario.entity';
+import { Usuario } from '../usuarios/usuario.entity';
 
-@Injectable()
-export class LibrosService {
-  constructor(
-    @InjectRepository(Libro)
-    private readonly libroRepository: Repository<Libro>,
-  ) {}
+describe('LibrosController', () => {
+  let librosController: LibrosController;
+  let librosService: LibrosService;
 
-  async crear(libroDto: Libro): Promise<Libro> {
-    const libro = new Libro();
-    libro.titulo = libroDto.titulo;
-    libro.anioPublicacion = libroDto.anioPublicacion;
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [LibrosController],
+      providers: [
+        LibrosService,
+        {
+          provide: getRepositoryToken(Libro),
+          useClass: Repository,
+        },
+      ],
+    }).compile();
 
-    // Si el autor tiene un ID válido, asigna el autor al libro
-    if (libroDto.autor && libroDto.autor.id) {
-      libro.autor = { id: libroDto.autor.id } as Usuario; // Cambia 'Usuario' por el tipo real de la entidad de usuario
-    }
+    librosController = module.get<LibrosController>(LibrosController);
+    librosService = module.get<LibrosService>(LibrosService);
+  });
 
-    return this.libroRepository.save(libro);
-  }
-}
+  describe('crear', () => {
+    it('should create a libro', async () => {
+      const libro = { titulo: 'El libro', anioPublicacion: 2023, autor: { id: 1 } as Usuario, id: 1 };
+      const createdLibro = { ...libro } as Libro;
+
+    });
+  });
+});

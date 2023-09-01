@@ -1,18 +1,39 @@
-import { Controller, Post, Body } from '@nestjs/common';
-import { UsuariosService } from './usuarios.service';
-import { Usuario } from './usuario.entity';
+import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { UsuariosController } from '../usuarios/usuarios.controller';
+import { UsuariosService } from '../usuarios/usuarios.service';
+import { Usuario } from '../usuarios/usuario.entity';
+import { Repository } from 'typeorm';
 
-@Controller('usuarios')
-export class UsuariosController {
-  constructor(private readonly usuariosService: UsuariosService) {}
+describe('UsuariosController', () => {
+  let usuariosController: UsuariosController;
+  let usuariosService: UsuariosService;
 
-  @Post('registro')
-  async registrarUsuario(@Body() usuario: Usuario): Promise<Usuario> {
-    return this.usuariosService.registrar(usuario);
-  }
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [UsuariosController],
+      providers: [
+        UsuariosService,
+        {
+          provide: getRepositoryToken(Usuario),
+          useClass: Repository,
+        },
+      ],
+    }).compile();
 
-  @Post('login')
-  async login(@Body() usuario: Usuario): Promise<string> {
-    return this.usuariosService.login(usuario);
-  }
-}
+    usuariosController = module.get<UsuariosController>(UsuariosController);
+    usuariosService = module.get<UsuariosService>(UsuariosService);
+  });
+
+  describe('registrarUsuario', () => {
+    it('should register a new user', async () => {
+      // Implement your test here
+    });
+  });
+
+  describe('login', () => {
+    it('should log in a user', async () => {
+      // Implement your test here
+    });
+  });
+});
